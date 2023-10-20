@@ -98,7 +98,7 @@ class FormService
         $form->status = $validatedData['status'];
         $form->save();
 
-        $this->crmLogService->addCrmLog($form,"Manage Forms","formAdd");
+        // $this->crmLogService->addCrmLog($form,"Manage Forms","formAdd");
     }
     public function formEdit($validatedData, Form $form): void
     {

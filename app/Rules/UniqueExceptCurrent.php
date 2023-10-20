@@ -4,6 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use PDO;
 
 class UniqueExceptCurrent implements Rule
 {
@@ -20,23 +21,13 @@ class UniqueExceptCurrent implements Rule
 
     public function passes($attribute, $value)
     {
-        $query = "";
-      
-        if (!empty($this->model)) {
-            // For edit case
-            $query = DB::table($this->table)
-                ->where($this->column, $value)
-                ->where('id', '!=', $this->model->id)
-                ->where('deleted','0')
-                ->count();
-        } else {
-            // For add case
-            $query = DB::table($this->table)
-                ->where($this->column, $value)
-                ->where('deleted','0')
-                ->count();
+        $query = DB::table($this->table)
+            ->where($this->column, $value)
+            ->where('deleted', '0');
+        if ($this->model) {
+            $query = $query->where('id', '!=', $this->model->id);
         }
-
+        $query = $query->count();
         if ($query > 0) {
             return false;
         } else {

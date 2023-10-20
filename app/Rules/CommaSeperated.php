@@ -11,7 +11,7 @@ class CommaSeperated implements Rule
      *
      * @return void
      */
-    public function __construct($minValues = 3)
+    public function __construct(public $minValues = 3)
     {
         $this->minValues = $minValues;
     }
