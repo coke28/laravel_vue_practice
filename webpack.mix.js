@@ -1,7 +1,7 @@
 
 const mix = require('laravel-mix');
 
-mix.js('resources/assets/app.js', 'public/js');
+mix.js('resources/assets/app.js', 'public/js').vue();
 // const mix = require('laravel-mix');
 const glob = require('glob');
 const path = require('path');

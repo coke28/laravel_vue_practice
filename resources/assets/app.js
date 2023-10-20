@@ -13,3 +13,12 @@ window.Echo = new Echo({
     disableStats: true,
     enabledTransports: ['ws', 'wss'],
 });
+
+import { createApp } from 'vue'
+import Welcome from './components/Welcome'
+
+const app = createApp({})
+
+app.component('welcome', Welcome)
+
+app.mount('#app')

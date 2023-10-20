@@ -91,6 +91,7 @@
         "toastr": "^2.1.4",
         "typed.js": "^2.0.12",
         "vis-timeline": "^7.4.9",
+        "vue": "^3.2.36",
         "wnumb": "^1.2.0"
     },
     "devDependencies": {
@@ -107,6 +108,7 @@
         "sass": "1.32.13",
         "sass-loader": "^8.0.2",
         "tailwindcss": "^2.0.2",
+        "vue-loader": "^17.3.0",
         "webpack-rtl-plugin": "^2.0.0"
     }
 }
