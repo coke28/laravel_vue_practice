@@ -39,7 +39,6 @@ class CrmLogService
                 ->orWhere('affected_row_copy', 'like', '%' . $search . '%')
                 ->orWhere('created_at', 'like', '%' . $search . '%');
         });
-        $crm_logsCount = $crm_logs->count();
         if ($request->sort) {
             $crm_logs->orderBy($request->sort, $request->order);
         }
@@ -47,7 +46,6 @@ class CrmLogService
 
 
         $result = [
-            'recordsTotal'    => $crm_logsCount,
             'data'            => $paginated->items(),
             'pagination' => [
                 'total' => $paginated->total(),

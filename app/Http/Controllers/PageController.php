@@ -51,7 +51,7 @@ class PageController extends Controller
           array('header_name' => 'ID', 'header_value'=> 'id', 'orderable' => true),
           array('header_name' => 'Module Name', 'header_value'=> 'module_name', 'orderable' => true),
           array('header_name' => 'action', 'header_value'=> 'action', 'orderable' => true),
-          array('header_name' => 'Username', 'header_value'=> 'user_id', 'orderable' => true),
+          array('header_name' => 'Username', 'header_value'=> 'user_name', 'orderable' => true),
           array('header_name' => 'affected_row_copy', 'header_value'=> 'affected_row_copy', 'orderable' => false),
           array('header_name' => 'Created At', 'header_value'=> 'created_at', 'orderable' => true),
         ]

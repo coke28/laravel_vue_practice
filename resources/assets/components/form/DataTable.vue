@@ -23,7 +23,6 @@
     <table class="table table-rounded table-striped border gy-7 gs-7">
       <thead>
         <tr class="fw-semibold fs-6 text-black-800 border-bottom border-gray-200">
-          <!-- <tr class="fw-semibold fs-6 text-black-800 border-bottom border-gray-200"> -->
           <th v-for="table_column in parameters.table_columns" :key="table_column.header_value"
             @click="table_column.orderable ? this.sortColumn(table_column.header_value) : null">{{
               table_column.header_name }}
@@ -56,7 +55,7 @@ export default {
   },
   props: {
     parameters: {
-      type: Object, // or Array, if you want to accept both
+      type: Object,
       required: true
     }
   },

@@ -46,14 +46,12 @@ class FormService
                 ->orWhere('status', 'like', '%' . $search . '%')
                 ->orWhere('created_at', 'like', '%' . $search . '%');
         });
-        $formCount = $forms->count();
         if ($request->sort) {
             $forms->orderBy($request->sort, $request->order);
         }
         $paginated = $forms->paginate();
 
         $result = [
-            'recordsTotal'    => $formCount,
             'data'            => $paginated->items(),
             'pagination' => [
                 'total' => $paginated->total(),
