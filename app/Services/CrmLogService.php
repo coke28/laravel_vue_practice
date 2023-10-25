@@ -15,37 +15,10 @@ class CrmLogService
         header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
         header('Access-Control-Allow-Headers: *');
 
-        $tableColumns = array(
-            'id',
-            'module_name',
-            'action',
-            'user_name',
-            'affected_row_copy',
-            'created_at',
-        );
-
-        // offset and limit
-        $offset = 0;
-        $limit = 10;
-        if (isset($request->length)) {
-            $offset = isset($request->start) ? $request->start : $offset;
-            $limit = isset($request->length) ? $request->length : $limit;
-        }
-
         // searchText
         $search = '';
         if (isset($request->search) && isset($request->search['value'])) {
             $search = $request->search['value'];
-        }
-
-        // ordering
-        $sortIndex = 0;
-        $sortOrder = 'desc';
-        if (isset($request->order) && isset($request->order[0]) && isset($request->order[0]['column'])) {
-            $sortIndex = $request->order[0]['column'];
-        }
-        if (isset($request->order) && isset($request->order[0]) && isset($request->order[0]['dir'])) {
-            $sortOrder = $request->order[0]['dir'];
         }
 
         $crm_logs = DB::table('crm_logs')->selectRaw('
@@ -65,23 +38,27 @@ class CrmLogService
                 ->orWhere('user_name', 'like', '%' . $search . '%')
                 ->orWhere('affected_row_copy', 'like', '%' . $search . '%')
                 ->orWhere('created_at', 'like', '%' . $search . '%');
-        })
-            ->orderBy($tableColumns[$sortIndex], $sortOrder);
+        });
         $crm_logsCount = $crm_logs->count();
-        $crm_logs = $crm_logs->offset($offset)
-            ->limit($limit)
-            ->get();
-
+        if ($request->sort) {
+            $crm_logs->orderBy($request->sort, $request->order);
+        }
+        $paginated = $crm_logs->paginate();
 
 
         $result = [
             'recordsTotal'    => $crm_logsCount,
-            'recordsFiltered' => $crm_logsCount,
-            'data'            => $crm_logs,
+            'data'            => $paginated->items(),
+            'pagination' => [
+                'total' => $paginated->total(),
+                'per_page' => $paginated->perPage(),
+                'current_page' => $paginated->currentPage(),
+                'last_page' => $paginated->lastPage(),]
         ];
 
         return $result;
     }
+
 
     public function addCrmLog($model,$module_name,$action)
     {

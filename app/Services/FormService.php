@@ -22,38 +22,11 @@ class FormService
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
         header('Access-Control-Allow-Headers: *');
-
-        $tableColumns = array(
-            'id',
-            'form_name',
-            'file_template_url',
-            'data_set',
-            'status',
-            'created_at',
-        );
-
-        // offset and limit
-        $offset = 0;
-        $limit = 10;
-        if (isset($request->length)) {
-            $offset = isset($request->start) ? $request->start : $offset;
-            $limit = isset($request->length) ? $request->length : $limit;
-        }
-
+     
         // searchText
         $search = '';
         if (isset($request->search) && isset($request->search['value'])) {
             $search = $request->search['value'];
-        }
-
-        // ordering
-        $sortIndex = 0;
-        $sortOrder = 'desc';
-        if (isset($request->order) && isset($request->order[0]) && isset($request->order[0]['column'])) {
-            $sortIndex = $request->order[0]['column'];
-        }
-        if (isset($request->order) && isset($request->order[0]) && isset($request->order[0]['dir'])) {
-            $sortOrder = $request->order[0]['dir'];
         }
 
         $forms = DB::table('forms')->selectRaw('
@@ -72,19 +45,21 @@ class FormService
                 ->orWhere('data_set', 'like', '%' . $search . '%')
                 ->orWhere('status', 'like', '%' . $search . '%')
                 ->orWhere('created_at', 'like', '%' . $search . '%');
-        })
-            ->orderBy($tableColumns[$sortIndex], $sortOrder);
+        });
         $formCount = $forms->count();
-        $forms = $forms->offset($offset)
-            ->limit($limit)
-            ->get();
-
-
+        if ($request->sort) {
+            $forms->orderBy($request->sort, $request->order);
+        }
+        $paginated = $forms->paginate();
 
         $result = [
             'recordsTotal'    => $formCount,
-            'recordsFiltered' => $formCount,
-            'data'            => $forms,
+            'data'            => $paginated->items(),
+            'pagination' => [
+                'total' => $paginated->total(),
+                'per_page' => $paginated->perPage(),
+                'current_page' => $paginated->currentPage(),
+                'last_page' => $paginated->lastPage(),]
         ];
 
         return $result;

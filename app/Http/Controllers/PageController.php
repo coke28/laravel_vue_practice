@@ -34,6 +34,28 @@ class PageController extends Controller
     return view('dashboard.view', array(
       'pageTitle' => 'Dashboard',
       'pageDescription' => 'Test description',
+      'parameters' => [
+        'tb_api' => 'api/form/formTB',
+        'table_columns' =>[
+          array('header_name' => 'ID', 'header_value'=> 'id', 'orderable' => true),
+          array('header_name' => 'Form Name', 'header_value'=> 'form_name', 'orderable' => true),
+          array('header_name' => 'Form Template URL', 'header_value'=> 'file_template_url', 'orderable' => true),
+          array('header_name' => 'Data Set', 'header_value'=> 'data_set', 'orderable' => true),
+          array('header_name' => 'Status', 'header_value'=> 'status', 'orderable' => false),
+          array('header_name' => 'Created At', 'header_value'=> 'created_at', 'orderable' => true),
+        ]
+      ],
+      'parameters2' => [
+        'tb_api' => 'api/crmLog/table',
+        'table_columns' =>[
+          array('header_name' => 'ID', 'header_value'=> 'id', 'orderable' => true),
+          array('header_name' => 'Module Name', 'header_value'=> 'module_name', 'orderable' => true),
+          array('header_name' => 'action', 'header_value'=> 'action', 'orderable' => true),
+          array('header_name' => 'Username', 'header_value'=> 'user_id', 'orderable' => true),
+          array('header_name' => 'affected_row_copy', 'header_value'=> 'affected_row_copy', 'orderable' => false),
+          array('header_name' => 'Created At', 'header_value'=> 'created_at', 'orderable' => true),
+        ]
+      ],
     ));
   }
 

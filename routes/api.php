@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\CrmLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::group(['prefix' => 'form'], function () {
     Route::post('add', [FormController::class, 'formAdd'])->name('form.add');
+    Route::get('formTB', [FormController::class, 'formTB'])->name('form.tb');
 });
+Route::group(['prefix' => 'crmLog'], function () {
+    //Form Routes
+    Route::get('table', [CrmLogController::class, 'crmLogTB'])->name('crmLog.table');
+  });
