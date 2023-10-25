@@ -16,11 +16,11 @@ window.Echo = new Echo({
 
 import { createApp } from 'vue'
 import FormAdd from './components/form/FormAdd'
-import FormTable from './components/form/FormTable'
+import DataTable from './components/form/DataTable'
 
 const app = createApp({})
 
 app.component('form-add-vue', FormAdd)
-app.component('form-table-vue', FormTable)
+app.component('data-table-vue', DataTable)
 
 app.mount('#app')

@@ -28,14 +28,14 @@
             <div class="card-body text-center">
               <!-- Add content for the third card -->
               {{-- DONT FORGET TO USE V BIND ON PROP AS parameters type accepts object json type only --}}
-              <form-table-vue  :parameters='@json($parameters)'></form-table-vue>
+              <data-table-vue  :parameters='@json($parameters)'></data-table-vue>
             </div>
           </div>
         </div>
           <div class="col-md-6 mb-4">
             <div class="card h-100">
               <div class="card-body text-center">
-                <form-table-vue  :parameters='@json($parameters2)'></form-table-vue>
+                <data-table-vue  :parameters='@json($parameters2)'></data-table-vue>
               </div>
             </div>
           </div>
