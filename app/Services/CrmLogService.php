@@ -17,8 +17,8 @@ class CrmLogService
 
         // searchText
         $search = '';
-        if (isset($request->search) && isset($request->search['value'])) {
-            $search = $request->search['value'];
+        if (isset($request->search) && isset($request->search)) {
+            $search = $request->search;
         }
 
         $crm_logs = DB::table('crm_logs')->selectRaw('

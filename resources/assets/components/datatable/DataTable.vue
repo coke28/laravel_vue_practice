@@ -1,16 +1,9 @@
 <template>
   <div>
     <div class="d-flex flex-stack mb-5">
-      <div class="d-flex align-items-center position-relative my-1 mb-2 mb-md-0">
-        <div class="input-group input-group-solid">
-          <span class="svg-icon svg-icon-1 input-group-text"><i class="bi bi-search"></i></span>
-          <input type="text" v-model="search" @input="this.searchData" placeholder="Search...(Minimum search length 3.)"
-            class="form-control form-control-lg form-control-solid">
-          <button class="input-group-text clearInp">
-            <i class="fas fa-times fs-4"></i>
-          </button>
-        </div>
-      </div>
+      <!-- listening for searchData and clearSearchData event -->
+      <search-bar-vue @search-data="handleSearchData" @clear-search-data="handleClearSearchData">
+      </search-bar-vue>
 
       <!-- <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
         <button type="button" class="btn btn-primary" title="Add Form" data-bs-toggle="modal" data-bs-target="#addForm">
@@ -24,7 +17,7 @@
       <thead>
         <tr class="fw-semibold fs-6 text-black-800 border-bottom border-gray-200">
           <th v-for="table_column in parameters.table_columns" :key="table_column.header_value"
-            @click="table_column.orderable ? this.sortColumn(table_column.header_value) : null">{{
+            @click="table_column.orderable ? sortColumn(table_column.header_value) : null">{{
               table_column.header_name }}
             <i v-if="table_column.orderable" class="bi bi-sort-alpha-down" aria-label='Sort Icon'></i>
           </th>
@@ -42,12 +35,15 @@
 </template>
 
 <script>
+import SearchBar from './SearchBar'
 
 export default {
+  components: {
+    'search-bar-vue': SearchBar,
+  },
   data() {
     return {
       response_data: [],
-      search: '',
       sort: '',
       order: 'asc',
       pagination: {},
@@ -60,10 +56,10 @@ export default {
     }
   },
   methods: {
-    async fetchData() {
+    async fetchData(search = "") {
       const response = await axios.get(this.parameters.tb_api, {
         params: {
-          search: this.search,
+          search: search,
           sort: this.sort,
           order: this.order,
           page: this.pagination.current_page || 1,
@@ -80,6 +76,12 @@ export default {
         this.order = 'asc';
       }
       this.fetchData();
+    },
+    handleSearchData(search) {
+      this.fetchData(search);
+    },
+    handleClearSearchData(search) {
+      this.fetchData(search);
     },
   },
   mounted() {

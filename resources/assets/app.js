@@ -16,7 +16,7 @@ window.Echo = new Echo({
 
 import { createApp } from 'vue'
 import FormAdd from './components/form/FormAdd'
-import DataTable from './components/form/DataTable'
+import DataTable from './components/datatable/DataTable'
 
 const app = createApp({})
 
