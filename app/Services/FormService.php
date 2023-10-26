@@ -49,7 +49,13 @@ class FormService
         if ($request->sort) {
             $forms->orderBy($request->sort, $request->order);
         }
-        $paginated = $forms->paginate();
+
+        if($request->paginate_display){
+            $paginated = $forms->paginate($request->paginate_display);
+        }else{
+            $paginated = $forms->paginate(10);
+        }
+        
 
         $result = [
             'data'            => $paginated->items(),

@@ -42,8 +42,13 @@ class CrmLogService
         if ($request->sort) {
             $crm_logs->orderBy($request->sort, $request->order);
         }
-        $paginated = $crm_logs->paginate();
+        
 
+        if($request->paginate_display){
+            $paginated = $crm_logs->paginate($request->paginate_display);
+        }else{
+            $paginated = $crm_logs->paginate(10);
+        }
 
         $result = [
             'data'            => $paginated->items(),
