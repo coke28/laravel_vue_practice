@@ -44,7 +44,7 @@ class PageController extends Controller
           array('header_name' => 'Data Set', 'header_value'=> 'data_set', 'orderable' => true),
           array('header_name' => 'Status', 'header_value'=> 'status', 'orderable' => false),
           array('header_name' => 'Created At', 'header_value'=> 'created_at', 'orderable' => true),
-        ]
+        ],
       ],
       'parameters2' => [
         'tb_api' => 'api/crmLog/table',
@@ -56,6 +56,11 @@ class PageController extends Controller
           array('header_name' => 'Username', 'header_value'=> 'user_name', 'orderable' => true),
           array('header_name' => 'affected_row_copy', 'header_value'=> 'affected_row_copy', 'orderable' => false),
           array('header_name' => 'Created At', 'header_value'=> 'created_at', 'orderable' => true),
+        ],
+        //tool_name either delete or edit only
+        'tools' =>[
+          array('tool_name' => 'delete' ,'tool_api'=> 'api/crmLog/delete/'),
+          array('tool_name' => 'edit', 'tool_api'=> 'api/crmLog/edit/'),
         ]
       ],
     ));

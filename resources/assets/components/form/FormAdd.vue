@@ -136,7 +136,7 @@ export default {
                 toastr.error("Something went wrong", "Error");
             }).finally(() => {
                 this.isLoading = false; // Set isLoading back to false after the request is complete
-            });;
+            });
         }
     }
 }

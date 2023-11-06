@@ -27,4 +27,5 @@ Route::group(['prefix' => 'form'], function () {
 Route::group(['prefix' => 'crmLog'], function () {
     //Form Routes
     Route::get('table', [CrmLogController::class, 'crmLogTB'])->name('crmLog.table');
+    Route::post('delete/{crmLog}', [CrmLogController::class, 'crmLogDelete'])->name('crmLog.delete');
   });

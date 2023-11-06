@@ -18,12 +18,37 @@
                 table_column.header_name }}
               <i v-if="table_column.orderable" class="bi bi-sort-alpha-down" aria-label='Sort Icon'></i>
             </th>
+            <th v-if="parameters.tools">
+              Tools
+            </th>
           </tr>
         </thead>
         <tbody class="text-black-600 fw-bold">
           <tr v-for="data_row in response_data" :key="data_row.id">
             <td v-for="table_column in parameters.table_columns" :key="table_column.header_value">
               {{ data_row[table_column.header_value] }}
+            </td>
+
+            <td v-if="parameters.tools">
+              <!-- Actions Dropdown -->
+              <div class="dropdown">
+                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  Actions
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li v-for="tool in parameters.tools" :key="tool.tool_name">
+                    <a v-if="tool.tool_name === 'delete'" href="#" @click.prevent="deleteItem(data_row.id, tool.tool_api)"
+                      class="dropdown-item">
+                      Delete
+                    </a>
+                    <a v-if="tool.tool_name === 'edit'" href="#" @click.prevent="editItem(data_row.id, tool.tool_api)"
+                      class="dropdown-item">
+                      Edit
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -127,7 +152,79 @@ export default {
       this.search = "";
       this.fetchData(1);
 
-    }
+    },
+
+    deleteItem(id, deleteApiEndpoint) {
+      const vue = this; // Capture the Vue instance 'this' context
+      Swal.fire({
+        html: `Are you sure you want to delete ID: ` + id + `?`,
+        icon: "info",
+        buttonsStyling: false,
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        cancelButtonText: 'Cancel',
+        customClass: {
+          confirmButton: "btn btn-primary",
+          cancelButton: 'btn btn-danger'
+        }
+      }).then(function (result) {
+
+        if (result.isConfirmed) {
+          axios.post(deleteApiEndpoint + id)
+            .then(response => {
+              // Handle successful delete here, perhaps refresh the table or show a message
+              toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+              };
+              toastr.success(response.data.message, "Success");
+              vue.fetchData();
+            })
+            .catch(error => {
+              toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+              };
+              toastr.error(error.message, "Error");
+            });
+
+        }
+      });
+    },
+
+    editItem(id, editApiEndpoint) {
+      // You might want to redirect to an edit page, or open a modal with form for editing.
+      // This example assumes a redirection to a route that handles editing.
+      window.location.href = `${editApiEndpoint}/${id}`;
+    },
+
+
   },
   mounted() {
     this.fetchData();
