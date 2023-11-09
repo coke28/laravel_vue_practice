@@ -36,6 +36,8 @@ class PageController extends Controller
       'pageDescription' => 'Test description',
       'parameters' => [
         'tb_api' => 'api/form/formTB',
+        'model' => 'Form',
+        'customFormComponent' => 'CustomForm',
         'page_display' =>[5,10,25,50],
         'table_columns' =>[
           array('header_name' => 'ID', 'header_value'=> 'id', 'orderable' => true),
@@ -48,6 +50,7 @@ class PageController extends Controller
       ],
       'parameters2' => [
         'tb_api' => 'api/crmLog/table',
+        'model' => 'CRM Log',
         'page_display' =>[5,10,25,50],
         'table_columns' =>[
           array('header_name' => 'ID', 'header_value'=> 'id', 'orderable' => true),

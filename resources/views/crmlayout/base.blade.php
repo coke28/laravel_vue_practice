@@ -77,6 +77,7 @@ theme()->printHtmlClasses('html') }}>
     <div id="app">
         @yield('content')
     </div>
+    <div id="modal"></div>
     {{-- begin::Javascript --}}
     @if (theme()->hasOption('assets', 'js'))
     {{-- begin::Global Javascript Bundle(used by all pages) --}}

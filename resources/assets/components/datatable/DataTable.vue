@@ -1,9 +1,26 @@
 <template>
   <div>
+    <Teleport to="#modal">
+      <modal-vue v-if="showModal" :model="parameters.model"
+        :customFormComponent="parameters.customFormComponent" 
+        :modalMode="modalMode" 
+        @close-modal="closeModal()">
+      </modal-vue>
+    </Teleport>
     <div class="d-flex flex-stack mb-5">
+
       <!-- listening for searchData and clearSearchData event -->
       <search-bar-vue v-model="search" @update:modelValue="handleSearchUpdate()" @clear-search-data="handleClearSearch()">
       </search-bar-vue>
+
+      <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
+        <!--begin::Add special announcement-->
+        <button type="button" class="btn btn-primary" @click="openModal(add)">
+          <span class="svg-icon svg-icon-2"><i class="bi bi-plus fs-2"></i></span>
+         {{  'Add' +" "+ parameters.model }}
+        </button>
+        <!--end::Add special announcement-->
+      </div>
     </div>
     <!-- Start Table -->
     <div class="table-container">
@@ -89,10 +106,12 @@
 
 <script>
 import SearchBar from './SearchBar'
+import Modal from '../modal/Modal'
 
 export default {
   components: {
     'search-bar-vue': SearchBar,
+    'modal-vue': Modal,
   },
   data() {
     return {
@@ -103,6 +122,8 @@ export default {
       order: 'asc',
       pagination: {},
       paginate_display: 10,
+      showModal: false,
+      modeModal: '',
     };
   },
   props: {
@@ -153,7 +174,15 @@ export default {
       this.fetchData(1);
 
     },
+    openModal(modalMode) {
+      this.modeModal = modalMode;
+      this.showModal = true;
+      
+    },
+    closeModal() {
+      this.showModal = false;
 
+    },
     deleteItem(id, deleteApiEndpoint) {
       const vue = this; // Capture the Vue instance 'this' context
       Swal.fire({

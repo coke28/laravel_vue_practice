@@ -1,87 +1,78 @@
 <template>
-    <div class="modal fade" id="addForm" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="addForm"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="bi bi-plus"></i>
-                        Add Form
-                    </h5>
-                    <!--begin::Close-->
-                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
-                        aria-label="Close">
-                        <i aria-hidden="true" class="bi bi-x fs-2x"></i>
-                    </div>
-                    <!--end::Close-->
-                </div>
-                <div class="modal-body">
-                    <div class="formAlertDiv">
-
-                    </div>
-                    <form class="form" id="add_form_form">
-                        <div class="row mb-6">
-                            <label class="col-lg-2 col-form-label fw-bold fs-6">Name<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-lg-10 fv-row">
-                                <input type="text" name="form_name" class="form-control form-control-lg form-control-solid"
-                                    placeholder="Enter Form Name">
-                            </div>
-
-                        </div>
-                        <div class="row mb-6">
-                            <label class="col-lg-2 col-form-label fw-bold fs-6">Data Set<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-lg-10 fv-row">
-                                <input type="text" name="data_set" class="form-control form-control-lg form-control-solid"
-                                    placeholder="Enter Comma Seperated Dataset">
-                            </div>
-
-                        </div>
-
-                        <div class="row mb-6">
-                            <label class="col-lg-2 col-form-label fw-bold fs-6">File Template URL<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-lg-10 fv-row">
-                                <input type="text" name="file_template_url"
-                                    class="form-control form-control-lg form-control-solid"
-                                    placeholder="Enter File Template URL">
-                            </div>
-
-                        </div>
-
-                        <div class="row mb-6">
-                            <label class="col-lg-2 col-form-label fw-bold fs-6">Status</label>
-                            <div class="col-lg-10 fv-row">
-                                <select class="form-control selectpicker" name="status" id="status">
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="error-box" style="display: none;">
-                            <div id="" class="error-message">Server Validation Errors</div>
-                            <div id="form_name_error" class="error-message"></div>
-                            <div id="data_set_error" class="error-message"></div>
-                            <div id="status_error" class="error-message"></div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-danger font-weight-bold"
-                        data-bs-dismiss="modal">Close</button>
-                    <button type="submit" id="addFormSubmitBtn" class="btn btn-primary font-weight-bold"
-                        >Add Form</button>
-                </div>
-
-            </div>
-        </div>
+  <div class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ createModalTitle }}</h5>
+      </div>
+      <div class="modal-body">
+        <component :is="customFormComponent" :modalMode="modalMode"></component>
+        <!-- <form-add-vue></form-add-vue> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" @click="this.$emit('close-modal')">Close</button>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-export default {
+import CustomForm from '../form/CustomForm.vue'
 
-};
+export default {
+  components: {
+    CustomForm
+  },
+
+  computed: {
+    createModalTitle() {
+      return this.modalMode == 'edit'
+        ? 'Edit' + ' ' + this.model
+        : 'Add' + ' ' + this.model
+    }
+
+  },
+  props: {
+    model: {
+      type: String,
+      default: "default model"
+    },
+    customFormComponent: {
+      type: String,
+      default: null
+    },
+    modalMode: {
+      type: String,
+      default: "add"
+    },
+  },
+  emits: ['close-modal'],
+}
+
 </script>
+
+<style scoped>
+/* Custom modal styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+}
+</style>

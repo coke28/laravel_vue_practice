@@ -9,7 +9,7 @@
                     <input type="text" name="form_name" class="form-control form-control-lg form-control-solid"
                         v-model="fields.form_name" placeholder="Enter Form Name" required autofocus>
                 </div>
-                <div class="alert alert-danger" v-if="errors && errors.form_name">
+                <div class="alert alert-danger mt-5" v-if="errors && errors.form_name">
                     {{ errors.form_name[0] }}
                 </div>
             </div>
@@ -19,7 +19,7 @@
                     <input type="text" name="data_set" class="form-control form-control-lg form-control-solid"
                         placeholder="Enter Comma Seperated Dataset" v-model="fields.data_set" required autofocus>
                 </div>
-                <div class="alert alert-danger" v-if="errors && errors.data_set">
+                <div class="alert alert-danger mt-5" v-if="errors && errors.data_set">
                     {{ errors.data_set[0] }}
                 </div>
 
@@ -31,7 +31,7 @@
                     <input type="text" name="file_template_url" class="form-control form-control-lg form-control-solid"
                         placeholder="Enter File Template URL" v-model="fields.file_template_url" required autofocus>
                 </div>
-                <div class="alert alert-danger" v-if="errors && errors.file_template_url">
+                <div class="alert alert-danger mt-5" v-if="errors && errors.file_template_url">
                     {{ errors.file_template_url[0] }}
                 </div>
 
@@ -46,7 +46,7 @@
                         <option value="0">Inactive</option>
                     </select>
                 </div>
-                <div class="alert alert-danger" v-if="errors && errors.status">
+                <div class="alert alert-danger mt-5" v-if="errors && errors.status">
                     {{ errors.status[0] }}
                 </div>
             </div>
