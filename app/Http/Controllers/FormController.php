@@ -78,20 +78,19 @@ class FormController extends Controller
     }
 
 
-    // public function formDelete(Form $form)
-    // {
+    public function formDelete(Form $form)
+    {
+        try {
+            //code...
+            $this->formService->formDelete($form);
+        } catch (\Exception $exception) {
+            //throw $ex;
+            return response()->json(['error' => $exception->getMessage()], 422);
+        }
 
-    //     try {
-    //         //code...
-    //         $this->formService->formDelete($form);
-    //     } catch (\Exception $exception) {
-    //         //throw $ex;
-    //         return response()->json(['error' => $exception->getMessage()], 422);
-    //     }
-
-    //     return json_encode(array(
-    //         'success' => true,
-    //         'message' => 'Form Deleted successfully.'
-    //     ));
-    // }
+        return json_encode(array(
+            'success' => true,
+            'message' => 'Form Deleted successfully.'
+        ));
+    }
 }

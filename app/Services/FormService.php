@@ -36,7 +36,7 @@ class FormService
             data_set,
             CASE status WHEN 0 THEN "DISABLED" WHEN 1 THEN "ACTIVE" END as status,
             created_at
-        ');
+        ')->where('deleted','0');
 
         $forms = $forms->where(function ($query) use ($search) {
             return $query->where('id', 'like', '%' . $search . '%')

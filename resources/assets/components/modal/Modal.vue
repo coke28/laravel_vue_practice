@@ -1,16 +1,14 @@
 <template>
   <div class="modal">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header d-flex justify-content-between align-items-center">
         <h5 class="modal-title">{{ createModalTitle }}</h5>
+        <button type="button" class="btn btn-active-danger" @click="this.$emit('close-modal')">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body">
-        <component :is="customFormComponent" :modalMode="modalMode"></component>
-        <!-- <form-add-vue></form-add-vue> -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" @click="this.$emit('close-modal')">Close</button>
+        <component :is="customFormComponent" :modalMode="modalMode" @form-submit="this.$emit('form-submit')" @close-modal="this.$emit('close-modal')"></component>
       </div>
     </div>
   </div>
@@ -26,9 +24,9 @@ export default {
 
   computed: {
     createModalTitle() {
-      return this.modalMode == 'edit'
-        ? 'Edit' + ' ' + this.model
-        : 'Add' + ' ' + this.model
+      return this.modalMode == 'add'
+        ? 'Add' + ' ' + this.model
+        : 'Edit' + ' ' + this.model
     }
 
   },
@@ -42,11 +40,11 @@ export default {
       default: null
     },
     modalMode: {
-      type: String,
+      type: [String,Number],
       default: "add"
     },
   },
-  emits: ['close-modal'],
+  emits: ['close-modal','form-submit'],
 }
 
 </script>

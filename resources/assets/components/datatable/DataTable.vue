@@ -1,11 +1,11 @@
 <template>
   <div>
     <Teleport to="#modal">
-      <modal-vue v-if="showModal" :model="parameters.model"
-        :customFormComponent="parameters.customFormComponent" 
-        :modalMode="modalMode" 
-        @close-modal="closeModal()">
-      </modal-vue>
+      <Transition name="modal">
+        <modal-vue v-if="showModal" :model="parameters.model" :customFormComponent="parameters.customFormComponent"
+          :modalMode="modalMode" @close-modal="closeModal()" @form-submit="fetchData(1)">
+        </modal-vue>
+      </Transition>
     </Teleport>
     <div class="d-flex flex-stack mb-5">
 
@@ -17,7 +17,7 @@
         <!--begin::Add special announcement-->
         <button type="button" class="btn btn-primary" @click="openModal(add)">
           <span class="svg-icon svg-icon-2"><i class="bi bi-plus fs-2"></i></span>
-         {{  'Add' +" "+ parameters.model }}
+          {{ 'Add' + " " + parameters.model }}
         </button>
         <!--end::Add special announcement-->
       </div>
@@ -59,7 +59,7 @@
                       class="dropdown-item">
                       Delete
                     </a>
-                    <a v-if="tool.tool_name === 'edit'" href="#" @click.prevent="editItem(data_row.id, tool.tool_api)"
+                    <a v-if="tool.tool_name === 'edit'" href="#" @click.prevent="openModal(data_row.id)"
                       class="dropdown-item">
                       Edit
                     </a>
@@ -123,7 +123,7 @@ export default {
       pagination: {},
       paginate_display: 10,
       showModal: false,
-      modeModal: '',
+      modalMode: '',
     };
   },
   props: {
@@ -175,15 +175,18 @@ export default {
 
     },
     openModal(modalMode) {
-      this.modeModal = modalMode;
+
+      this.modalMode = modalMode;
+      console.log(modalMode);
       this.showModal = true;
-      
+
     },
     closeModal() {
       this.showModal = false;
 
     },
     deleteItem(id, deleteApiEndpoint) {
+      console.log([id, deleteApiEndpoint]);
       const vue = this; // Capture the Vue instance 'this' context
       Swal.fire({
         html: `Are you sure you want to delete ID: ` + id + `?`,
@@ -246,14 +249,6 @@ export default {
         }
       });
     },
-
-    editItem(id, editApiEndpoint) {
-      // You might want to redirect to an edit page, or open a modal with form for editing.
-      // This example assumes a redirection to a route that handles editing.
-      window.location.href = `${editApiEndpoint}/${id}`;
-    },
-
-
   },
   mounted() {
     this.fetchData();
@@ -300,5 +295,16 @@ export default {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.modal-enter-active,
+.modal-leave-active {
+  transition: all 0.25s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+  transform: scale(1.1);
 }
 </style>

@@ -69,8 +69,8 @@ class CrmLogService
         $crm_log = new CrmLog();
         $crm_log->module_name = $module_name;
         $crm_log->action = $action;
-        $crm_log->user_id = auth()->user()->id;
-        $crm_log->user_name = auth()->user()->first_name." ".auth()->user()->last_name;
+        // $crm_log->user_id = auth()->user()->id;
+        // $crm_log->user_name = auth()->user()->first_name." ".auth()->user()->last_name;
         $crm_log->affected_row_copy = json_encode($model);
         $crm_log->save();
     }

@@ -47,6 +47,10 @@ class PageController extends Controller
           array('header_name' => 'Status', 'header_value'=> 'status', 'orderable' => false),
           array('header_name' => 'Created At', 'header_value'=> 'created_at', 'orderable' => true),
         ],
+        'tools' =>[
+          array('tool_name' => 'delete' ,'tool_api'=> 'api/form/delete/'),
+          array('tool_name' => 'edit'),
+        ]
       ],
       'parameters2' => [
         'tb_api' => 'api/crmLog/table',
@@ -63,7 +67,7 @@ class PageController extends Controller
         //tool_name either delete or edit only
         'tools' =>[
           array('tool_name' => 'delete' ,'tool_api'=> 'api/crmLog/delete/'),
-          array('tool_name' => 'edit', 'tool_api'=> 'api/crmLog/edit/'),
+          array('tool_name' => 'edit'),
         ]
       ],
     ));
