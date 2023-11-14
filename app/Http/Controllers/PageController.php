@@ -34,39 +34,43 @@ class PageController extends Controller
     return view('dashboard.view', array(
       'pageTitle' => 'Dashboard',
       'pageDescription' => 'Test description',
+      'tabs' => [
+        array('label' => 'Custom Form', 'component' => 'CustomForm'),
+        array('label' => 'Custom Form 2', 'component' => 'CustomForm2'),
+      ],
       'parameters' => [
         'tb_api' => 'api/form/formTB',
         'model' => 'Form',
         'customFormComponent' => 'CustomForm',
-        'page_display' =>[5,10,25,50],
-        'table_columns' =>[
-          array('header_name' => 'ID', 'header_value'=> 'id', 'orderable' => true),
-          array('header_name' => 'Form Name', 'header_value'=> 'form_name', 'orderable' => true),
-          array('header_name' => 'Form Template URL', 'header_value'=> 'file_template_url', 'orderable' => true),
-          array('header_name' => 'Data Set', 'header_value'=> 'data_set', 'orderable' => true),
-          array('header_name' => 'Status', 'header_value'=> 'status', 'orderable' => false),
-          array('header_name' => 'Created At', 'header_value'=> 'created_at', 'orderable' => true),
+        'page_display' => [5, 10, 25, 50],
+        'table_columns' => [
+          array('header_name' => 'ID', 'header_value' => 'id', 'orderable' => true),
+          array('header_name' => 'Form Name', 'header_value' => 'form_name', 'orderable' => true),
+          array('header_name' => 'Form Template URL', 'header_value' => 'file_template_url', 'orderable' => true),
+          array('header_name' => 'Data Set', 'header_value' => 'data_set', 'orderable' => true),
+          array('header_name' => 'Status', 'header_value' => 'status', 'orderable' => false),
+          array('header_name' => 'Created At', 'header_value' => 'created_at', 'orderable' => true),
         ],
-        'tools' =>[
-          array('tool_name' => 'delete' ,'tool_api'=> 'api/form/delete/'),
+        'tools' => [
+          array('tool_name' => 'delete', 'tool_api' => 'api/form/delete/'),
           array('tool_name' => 'edit'),
         ]
       ],
       'parameters2' => [
         'tb_api' => 'api/crmLog/table',
         'model' => 'CRM Log',
-        'page_display' =>[5,10,25,50],
-        'table_columns' =>[
-          array('header_name' => 'ID', 'header_value'=> 'id', 'orderable' => true),
-          array('header_name' => 'Module Name', 'header_value'=> 'module_name', 'orderable' => true),
-          array('header_name' => 'action', 'header_value'=> 'action', 'orderable' => true),
-          array('header_name' => 'Username', 'header_value'=> 'user_name', 'orderable' => true),
-          array('header_name' => 'affected_row_copy', 'header_value'=> 'affected_row_copy', 'orderable' => false),
-          array('header_name' => 'Created At', 'header_value'=> 'created_at', 'orderable' => true),
+        'page_display' => [5, 10, 25, 50],
+        'table_columns' => [
+          array('header_name' => 'ID', 'header_value' => 'id', 'orderable' => true),
+          array('header_name' => 'Module Name', 'header_value' => 'module_name', 'orderable' => true),
+          array('header_name' => 'action', 'header_value' => 'action', 'orderable' => true),
+          array('header_name' => 'Username', 'header_value' => 'user_name', 'orderable' => true),
+          array('header_name' => 'affected_row_copy', 'header_value' => 'affected_row_copy', 'orderable' => false),
+          array('header_name' => 'Created At', 'header_value' => 'created_at', 'orderable' => true),
         ],
         //tool_name either delete or edit only
-        'tools' =>[
-          array('tool_name' => 'delete' ,'tool_api'=> 'api/crmLog/delete/'),
+        'tools' => [
+          array('tool_name' => 'delete', 'tool_api' => 'api/crmLog/delete/'),
           array('tool_name' => 'edit'),
         ]
       ],
@@ -147,6 +151,4 @@ class PageController extends Controller
       'pageDescription' => '',
     ));
   }
-
-
 }

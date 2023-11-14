@@ -17,9 +17,13 @@ window.Echo = new Echo({
 import { createApp } from 'vue'
 
 import DataTable from './components/datatable/DataTable'
+import Tabs from './components/tabs/Tabs'
+import CustomForm from './components/form/CustomForm'
 
 const app = createApp({})
 
 app.component('data-table-vue', DataTable)
+app.component('custom-form-vue', CustomForm)
+app.component('tabs-vue', Tabs)
 
 app.mount('#app')
