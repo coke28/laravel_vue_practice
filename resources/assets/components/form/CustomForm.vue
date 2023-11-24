@@ -204,7 +204,7 @@ export default {
             });
         }
     },
-    emits: ['close-modal','form-submit'],
+    emits: ['close-modal', 'form-submit'],
 }
 </script>
 
