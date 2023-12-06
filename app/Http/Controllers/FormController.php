@@ -7,8 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BarangayFormRequest;
 use App\Models\Form;
 use App\Services\FormService;
-use Event;
+use App\Imports\FormImport;
+use Illuminate\Support\Facades\Event;
+
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FormController extends Controller
 {
@@ -77,7 +80,6 @@ class FormController extends Controller
         ));
     }
 
-
     public function formDelete(Form $form)
     {
         try {
@@ -93,4 +95,32 @@ class FormController extends Controller
             'message' => 'Form Deleted successfully.'
         ));
     }
+
+    public function uploadFile(Request $request)
+    {
+        $request->validate([
+            'file' => 'file|mimes:xlsx,xls,csv|max:2048', // Adjust max file size as needed
+        ]);
+        
+        try {
+            $file = $request->file('file');
+            $import = new FormImport();
+            Excel::import($import, $file);
+            $uploadedFormCount = $import->rowCount;
+            
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            return response()->json(
+                
+                [
+                    'errors' => ['file' => $e->failures()]
+                ]
+                , 423);
+        }
+       
+        return json_encode(array(
+            'success' => true,
+            'message' => $uploadedFormCount ." forms uploaded succesfully!"
+        ));
+    }
+
 }

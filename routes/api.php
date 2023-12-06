@@ -26,6 +26,7 @@ Route::group(['prefix' => 'form'], function () {
     Route::get('get/{form}', [FormController::class, 'formGet'])->name('form.get');
     Route::post('edit/{form}', [FormController::class, 'formEdit'])->name('form.edit');
     Route::post('delete/{form}', [FormController::class, 'formDelete'])->name('form.delete');
+    Route::post('upload', [FormController::class, 'uploadFile'])->name('form.upload');
 });
 Route::group(['prefix' => 'crmLog'], function () {
     //Form Routes
