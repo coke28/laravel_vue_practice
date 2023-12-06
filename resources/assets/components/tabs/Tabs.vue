@@ -14,10 +14,12 @@
 </template>
   
 <script>
-import CustomForm from '../form/CustomForm.vue'
+import CustomForm from '../form/CustomForm'
+import UploadForm from '../form/UploadForm'
 export default {
     components: {
-        CustomForm
+        CustomForm,
+        UploadForm
     },
     props: {
         tabs: {
