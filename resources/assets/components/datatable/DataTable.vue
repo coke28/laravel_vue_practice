@@ -8,7 +8,6 @@
       </Transition>
     </Teleport>
     <div class="d-flex flex-stack mb-5">
-
       <!-- listening for searchData and clearSearchData event -->
       <search-bar-vue v-model="search" @update:modelValue="handleSearchUpdate()" @clear-search-data="handleClearSearch()">
       </search-bar-vue>
@@ -61,8 +60,7 @@
                       class="dropdown-item">
                       Edit
                     </a>
-                    <a v-if="tool.tool_name === 'redirect'" :href="tool.redirect_url" 
-                      class="dropdown-item">
+                    <a v-if="tool.tool_name === 'redirect'" :href="tool.redirect_url" class="dropdown-item">
                       Redirect Sample
                     </a>
                   </li>

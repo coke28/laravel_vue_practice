@@ -1,8 +1,6 @@
 <template>
     <div>
-        <div v-if="isLoading" class="loader-container">
-            <div class="loader"></div>
-        </div>
+        <loader-vue :isLoading="isLoading"></loader-vue>
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="row mb-6">
                 <label class="col-lg-2 col-form-label fw-bold fs-6">Upload File<span class="text-danger">*</span></label>
@@ -13,14 +11,11 @@
                 <div class="alert alert-danger mt-5" v-if="errors && errors.file">
                     {{ errors.file[0] }}
                 </div>
-
             </div>
             <div class="form-group row mb-6">
-                <div class="col-md-8 offset-md-4">
-                    <button type="submit" class="btn btn-primary">
-                        Upload File
-                    </button>
-                </div>
+                <button type="submit" class="btn btn-primary">
+                    Upload File
+                </button>
             </div>
         </form>
     </div>
