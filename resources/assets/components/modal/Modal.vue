@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import CustomForm from '../form/CustomForm.vue'
+import CustomForm from '../form/CustomForm'
 
 export default {
   components: {
