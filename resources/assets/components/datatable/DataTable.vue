@@ -61,6 +61,10 @@
                       class="dropdown-item">
                       Edit
                     </a>
+                    <a v-if="tool.tool_name === 'redirect'" :href="tool.redirect_url" 
+                      class="dropdown-item">
+                      Redirect Sample
+                    </a>
                   </li>
                 </ul>
               </div>

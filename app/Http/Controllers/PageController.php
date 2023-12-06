@@ -35,8 +35,9 @@ class PageController extends Controller
       'pageTitle' => 'Dashboard',
       'pageDescription' => 'Test description',
       'tabs' => [
+        array('label' => 'Custom Upload Form', 'component' => 'UploadForm'),
         array('label' => 'Custom Form', 'component' => 'CustomForm'),
-        array('label' => 'Custom Form 2', 'component' => 'CustomForm2'),
+       
       ],
       'parameters' => [
         'tb_api' => 'api/form/formTB',
@@ -54,6 +55,7 @@ class PageController extends Controller
         'tools' => [
           array('tool_name' => 'delete', 'tool_api' => 'api/form/delete/'),
           array('tool_name' => 'edit'),
+          array('tool_name' => 'redirect','redirect_url' => '/user'),
         ]
       ],
       'parameters2' => [
