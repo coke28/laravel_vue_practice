@@ -34,107 +34,65 @@ export default {
             isLoading: false,
         }
     },
-
-    props: {
-        modalMode: {
-            type: [String, Number],
-            default: "add"
-        },
-
-    },
     mounted() {
     },
     methods: {
 
-        handleFileUpload(){
+        handleFileUpload() {
             this.fields.file = this.$refs.file.files[0];
         },
 
         submit() {
             this.isLoading = true;
-            if (this.modalMode != 'add') {
-                this.isLoading = true;
-                axios.post('/api/form/edit/' + this.modalMode, this.fields).then(response => {
-                    console.log(response);
-                    this.fields = {};
-                    this.errors = {};
-                    this.$emit('form-submit');
-                    this.$emit('close-modal');
-                }).catch(error => {
-                    if (error.response.status == 422) {
-                        this.errors = error.response.data.errors;
-                    }
-                    toastr.options = {
-                        "closeButton": false,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toast-bottom-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    };
-                    toastr.error("Server error", "Error");
-                }).finally(() => {
-                    this.isLoading = false; // Set isLoading back to false after the request is complete
-                });
-            } else {
-                axios.post('/api/form/add', this.fields).then(response => {
-                    toastr.options = {
-                        closeButton: false,
-                        debug: false,
-                        newestOnTop: false,
-                        progressBar: false,
-                        positionClass: "toast-bottom-right",
-                        preventDuplicates: false,
-                        onclick: null,
-                        showDuration: "300",
-                        hideDuration: "1000",
-                        timeOut: "5000",
-                        extendedTimeOut: "1000",
-                        showEasing: "swing",
-                        hideEasing: "linear",
-                        showMethod: "fadeIn",
-                        hideMethod: "fadeOut",
-                    };
-                    toastr.success(response.data.message, "Success");
-                    this.fields = {};
-                    this.fields.status = "1";
-                    this.errors = {};
-                    this.$emit('form-submit');
-                }).catch(error => {
-                    if (error.response.status == 422) {
-                        this.errors = error.response.data.errors;
-                    }
-                    toastr.options = {
-                        "closeButton": false,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toast-bottom-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    };
-                    toastr.error("Something went wrong", "Error");
-                }).finally(() => {
-                    this.isLoading = false; // Set isLoading back to false after the request is complete
-                });
-            }
+            axios.post('/api/form/add', this.fields).then(response => {
+                toastr.options = {
+                    closeButton: false,
+                    debug: false,
+                    newestOnTop: false,
+                    progressBar: false,
+                    positionClass: "toast-bottom-right",
+                    preventDuplicates: false,
+                    onclick: null,
+                    showDuration: "300",
+                    hideDuration: "1000",
+                    timeOut: "5000",
+                    extendedTimeOut: "1000",
+                    showEasing: "swing",
+                    hideEasing: "linear",
+                    showMethod: "fadeIn",
+                    hideMethod: "fadeOut",
+                };
+                toastr.success(response.data.message, "Success");
+                this.fields = {};
+                this.fields.status = "1";
+                this.errors = {};
+                this.$emit('form-submit');
+            }).catch(error => {
+                if (error.response.status == 422) {
+                    this.errors = error.response.data.errors;
+                }
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-bottom-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+                toastr.error("Something went wrong", "Error");
+            }).finally(() => {
+                this.isLoading = false; // Set isLoading back to false after the request is complete
+            });
+
         },
     },
     emits: [''],

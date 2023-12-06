@@ -19,11 +19,13 @@ import { createApp } from 'vue'
 import DataTable from './components/datatable/DataTable'
 import Tabs from './components/tabs/Tabs'
 import CustomForm from './components/form/CustomForm'
+import Loader from './components/loader/Loader'
 
 const app = createApp({})
 
 app.component('data-table-vue', DataTable)
 app.component('custom-form-vue', CustomForm)
 app.component('tabs-vue', Tabs)
+app.component('loader-vue', Loader)
 
 app.mount('#app')
