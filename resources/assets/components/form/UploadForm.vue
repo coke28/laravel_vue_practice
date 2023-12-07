@@ -46,7 +46,7 @@ export default {
             var error_message = "";
             if (this.errors.file && this.errors.file.length > 0) {
                 // Use join to concatenate the error messages with a separator
-                error_message = this.errors.file.join(' ');
+                error_message = this.errors.file.join('');
             }
             return error_message;
         }
@@ -61,7 +61,7 @@ export default {
 
         submit() {
             this.isLoading = true;
-
+            this.errors = {};
             let formData = new FormData()
             formData.append('file', this.file)
             // Get the key and value paris of the fields array and append it to the formData variable
@@ -98,15 +98,14 @@ export default {
                     this.errors = error.response.data.errors;
                 }
 
-                if (error.response.status == 423) {
-                 
-
+                if (error.response.status == 418) {
+                    let errorArray = [];
                     for (let error of error.response.data.errors.file) {
-                        this.errors.push(error.errors[0] + " " + "on row" + " " + error.row);
+                        errorArray.push("On row #" + error.row+", "+error.errors[0]);                       
                     }
-
+                    this.errors.file = errorArray;
                 }
-
+                console.log(this.errors);
                 toastr.options = {
                     "closeButton": false,
                     "debug": false,

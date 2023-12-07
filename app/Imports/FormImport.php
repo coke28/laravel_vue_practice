@@ -47,7 +47,7 @@ class FormImport implements ToModel, WithValidation, WithHeadingRow, ShouldAutoS
             'form_name' => 'required|string',
             'file_template_url' => 'required|string',
             'data_set' => ['required', new CommaSeperated],
-            'status' => 'string',
+            'status' => 'required|in:1,0',
         ];
     }
 }
