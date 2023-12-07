@@ -76,7 +76,7 @@ class FormController extends Controller
     {
         return json_encode(array(
             'success' => true,
-            'formActiveCount' => Form::where('status','1')->count()
+            'formActiveCount' => Form::where('status', '1')->count()
         ));
     }
 
@@ -99,28 +99,30 @@ class FormController extends Controller
     public function uploadFile(Request $request)
     {
         $request->validate([
-            'file' => 'file|mimes:xlsx,xls,csv|max:2048', // Adjust max file size as needed
+            'file' => 'file|mimes:xlsx,xls,csv,text/csv,|max:2048',
         ]);
-        
+
         try {
             $file = $request->file('file');
             $import = new FormImport();
             Excel::import($import, $file);
             $uploadedFormCount = $import->rowCount;
-            
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             return response()->json(
-                
                 [
                     'errors' => ['file' => $e->failures()]
-                ]
-                , 418);
+                ],
+                418
+            );
+        } catch (\Exception $e) {
+            // Handle general exceptions here
+            return response()->json([
+                'errors' => ['file' => $e->getMessage()]
+            ], $e->getCode());
         }
-       
         return json_encode(array(
             'success' => true,
-            'message' => $uploadedFormCount ." forms uploaded succesfully!"
+            'message' => $uploadedFormCount . " forms uploaded succesfully!"
         ));
     }
-
 }

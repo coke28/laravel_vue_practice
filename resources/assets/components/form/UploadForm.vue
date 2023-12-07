@@ -69,67 +69,82 @@ export default {
                 formData.append(key, value);
             });
 
-            axios.post('/api/form/upload', formData).then(response => {
-
-                toastr.options = {
-                    closeButton: false,
-                    debug: false,
-                    newestOnTop: false,
-                    progressBar: false,
-                    positionClass: "toast-bottom-right",
-                    preventDuplicates: false,
-                    onclick: null,
-                    showDuration: "300",
-                    hideDuration: "1000",
-                    timeOut: "5000",
-                    extendedTimeOut: "1000",
-                    showEasing: "swing",
-                    hideEasing: "linear",
-                    showMethod: "fadeIn",
-                    hideMethod: "fadeOut",
-                };
-                toastr.success(response.data.message, "Success");
-                this.fields = {};
-                this.fields.status = "1";
-                this.errors = {};
-                this.$emit('form-submit');
-            }).catch(error => {
-                if (error.response.status == 422) {
-                    this.errors = error.response.data.errors;
-                }
-
-                if (error.response.status == 418) {
-                    let errorArray = [];
-                    for (let error of error.response.data.errors.file) {
-                        errorArray.push("On row #" + error.row+", "+error.errors[0]);                       
+            axios.post('/api/form/upload', formData,
+                {
+                    headers: {
+                        'Content-Type': "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2)
                     }
-                    this.errors.file = errorArray;
-                }
-                console.log(this.errors);
-                toastr.options = {
-                    "closeButton": false,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": false,
-                    "positionClass": "toast-bottom-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "5000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                };
-                toastr.error("Something went wrong", "Error");
-            }).finally(() => {
-                this.isLoading = false; // Set isLoading back to false after the request is complete
-            });
+
+                }).then(response => {
+
+                    toastr.options = {
+                        closeButton: false,
+                        debug: false,
+                        newestOnTop: false,
+                        progressBar: false,
+                        positionClass: "toast-bottom-right",
+                        preventDuplicates: false,
+                        onclick: null,
+                        showDuration: "300",
+                        hideDuration: "1000",
+                        timeOut: "5000",
+                        extendedTimeOut: "1000",
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                    };
+                    toastr.success(response.data.message, "Success");
+                    this.fields = {};
+                    this.fields.status = "1";
+                    this.file = {};
+                    if (this.$refs.file && this.$refs.file.files) {
+                        this.$refs.file.value = ''; // Clear the file input
+                    }
+                    this.errors = {};
+                    this.$emit('form-submit');
+                }).catch(error => {
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-bottom-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+
+                    if (error.response.status == 419) {
+                        toastr.error(error.response.data.errors.file, "Error");
+                    } else {
+                        toastr.error("Something went wrong", "Error");
+                    }
+
+                    if (error.response.status == 418) {
+                        let errorArray = [];
+                        for (let error of error.response.data.errors.file) {
+                            errorArray.push("On row #" + error.row + ", " + error.errors[0]);
+                        }
+                        this.errors.file = errorArray;
+                    }
+
+                    if (error.response.status == 422) {
+                        this.errors = error.response.data.errors;
+                    }
+                }).finally(() => {
+                    this.isLoading = false; // Set isLoading back to false after the request is complete
+                });
 
         },
     },
-    emits: [''],
+    emits: ['form-submit'],
 }
 </script>
