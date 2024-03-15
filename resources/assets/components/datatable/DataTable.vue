@@ -77,7 +77,7 @@
       <div class="form-group d-flex align-items-center">
         <label for="paginateDisplay" class="me-2">Per page:</label>
         <select class="form-select form-select-sm" id="paginateDisplay" v-model="paginate_display" @change="fetchData()">
-          <option v-for="paginate_display in parameters.page_display" :value="paginate_display">{{ paginate_display }}
+          <option v-for="(paginate_display, index) in parameters.page_display" :key="index" :value="paginate_display">{{ paginate_display }}
           </option>
         </select>
       </div>
